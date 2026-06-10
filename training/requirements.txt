@@ -1,0 +1,4 @@
+tensorflow
+larq
+tf-keras
+numpy

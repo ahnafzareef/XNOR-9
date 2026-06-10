@@ -1,0 +1,17 @@
+{
+    "name":  "bnn_accel",
+    "top":  "uart_top",
+    "constraintsFile":  "tangnano9k.cst",
+    "externalFlash":  true,
+    "includedFiles":  [
+                          "src/top.v",
+                          "src/bnn_seq.v",
+                          "src/layer_ctrl.v",
+                          "src/seq_neuron.v",
+                          "src/weight_mem.v",
+                          "src/seq_output.v",
+                          "src/uart_rx.v",
+                          "src/uart_tx.v",
+                          "src/uart_top.v"
+                      ]
+}

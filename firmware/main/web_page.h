@@ -1,0 +1,48 @@
+#ifndef WEB_PAGE_H
+#define WEB_PAGE_H
+
+static const char WEB_PAGE_HTML[] =
+    "<!DOCTYPE html><html><head>"
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"
+    "<style>"
+    "body{background:#111;color:#eee;font-family:sans-serif;text-align:center;margin:0;padding:16px}"
+    "canvas{background:#000;border:2px solid #555;touch-action:none}"
+    "button{font-size:18px;margin:8px;padding:10px 22px;border:0;border-radius:6px}"
+    "#result{font-size:72px;margin-top:8px;min-height:80px}"
+    "</style></head><body>"
+    "<h2>Draw a Digit</h2>"
+    "<canvas id='pad' width='280' height='280'></canvas><br>"
+    "<button onclick='classify()'>Classify</button>"
+    "<button onclick='clearPad()'>Clear</button>"
+    "<div id='result'>?</div>"
+    "<script>"
+    "const cv=document.getElementById('pad');"
+    "const ctx=cv.getContext('2d');"
+    "let drawing=false;"
+    "function coords(e){const r=cv.getBoundingClientRect();const t=e.touches?e.touches[0]:e;"
+    "return[(t.clientX-r.left)*cv.width/r.width,(t.clientY-r.top)*cv.height/r.height];}"
+    "function begin(e){drawing=true;stroke(e);e.preventDefault();}"
+    "function finish(){drawing=false;ctx.beginPath();}"
+    "function stroke(e){if(!drawing)return;const[x,y]=coords(e);"
+    "ctx.lineWidth=24;ctx.lineCap='round';ctx.strokeStyle='#fff';"
+    "ctx.lineTo(x,y);ctx.stroke();ctx.beginPath();ctx.moveTo(x,y);e.preventDefault();}"
+    "cv.addEventListener('mousedown',begin);cv.addEventListener('mouseup',finish);"
+    "cv.addEventListener('mousemove',stroke);cv.addEventListener('mouseleave',finish);"
+    "cv.addEventListener('touchstart',begin);cv.addEventListener('touchend',finish);"
+    "cv.addEventListener('touchmove',stroke);"
+    "function clearPad(){ctx.fillStyle='#000';ctx.fillRect(0,0,cv.width,cv.height);"
+    "document.getElementById('result').innerText='?';}"
+    "clearPad();"
+    "function classify(){"
+    "const src=ctx.getImageData(0,0,cv.width,cv.height).data;"
+    "const px=[];" // downsample 280x280 -> 28x28 by averaging 10x10 blocks, lowk bad accuracy tho
+    "for(let gy=0;gy<28;gy++){for(let gx=0;gx<28;gx++){"
+    "let sum=0;for(let yy=0;yy<10;yy++){for(let xx=0;xx<10;xx++){"
+    "const idx=(((gy*10+yy)*cv.width)+(gx*10+xx))*4;sum+=src[idx];}}"
+    "px.push(Math.round(sum/100));}}"
+    "fetch('/classify',{method:'POST',body:new Uint8Array(px)})"
+    ".then(r=>r.text()).then(t=>{document.getElementById('result').innerText=t;});"
+    "}"
+    "</script></body></html>";
+
+#endif // WEB_PAGE_H
