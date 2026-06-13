@@ -6,9 +6,8 @@ Draw a digit on your phone and a tiny FPGA guesses what number it is. The neural
 
 I wanted to understand quantization: how you shrink a neural network by storing its numbers in fewer bits. So I went to the extreme and built a network where every weight is a single bit, just +1 or -1.
 
-The cool part is what that does to the hardware. Normally a neural network multiplies a lot of decimal numbers, which is slow and expensive. But when everything is just +1 or -1, multiplying turns into one simple question: do the two values match? That's one logic gate. So the whole network can run on the plain logic of a cheap FPGA, with no special math hardware.
+Normally a neural network multiplies a lot of decimal numbers, which is slow and expensive. But when everything is just +1 or -1, you're only checking if the two values match, and that's one logic gate. So the whole network can run on LUTs.
 
-I used a small, cheap FPGA on purpose. Fitting a real network onto a tiny chip means you actually have to understand where everything goes.
 
 ## How it works
 
@@ -53,7 +52,7 @@ Then connect your phone to the `BNN_Demo` Wi-Fi and open `http://192.168.4.1`.
 
 ## How well it works
 
-About 95% on MNIST. It's a small network, so it won't beat a big one, but the goal was efficient hardware, not the highest score. It guesses best when you draw big, centered, and thick.
+About 95% on MNIST. It guesses best when you draw big, centered, and thick. Im looking to add normalization so it works the absolute best even if the writing doesn't resemble the training data set
 
 ## References
 
