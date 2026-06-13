@@ -4,7 +4,7 @@ Draw a digit on your phone and a tiny FPGA guesses what number it is. The neural
 
 ## Why I made it
 
-I wanted to understand quantization: how you shrink a neural network by storing its numbers in fewer bits. So I went to the extreme and built a network where every weight is a single bit, just +1 or -1.
+I wanted to understand quantization: how you shrink a neural network by storing its numbers in fewer bits. So I went and built a network where every weight is a single bit, just +1 or -1.
 
 Normally a neural network multiplies a lot of decimal numbers, which is slow and expensive. But when everything is just +1 or -1, you're only checking if the two values match, and that's one logic gate. So the whole network can run on LUTs.
 
