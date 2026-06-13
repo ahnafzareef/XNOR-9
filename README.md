@@ -14,7 +14,7 @@ Normally a neural network multiplies a lot of decimal numbers, which is slow and
 Three parts:
 
 - **Python** trains the network and shrinks every weight down to one bit (about 32x smaller).
-- **The FPGA** does the actual digit recognition, in logic.
+- **The FPGA** does the actual digit recognition, in logic (an XNOR).
 - **An ESP32** hosts a little web page so you can draw on your phone, then sends the drawing to the FPGA and shows the answer.
 
 The phone talks to the ESP32 over Wi-Fi, and the ESP32 talks to the FPGA over a UART link I wrote myself in Verilog.
