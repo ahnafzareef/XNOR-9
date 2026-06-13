@@ -1,6 +1,6 @@
 # XNOR-9
 
-Draw a digit on your phone and a tiny FPGA guesses what number it is. The neural network doesn't run on a computer or a processor — it runs as actual logic on the chip.
+Draw a digit on your phone and a tiny FPGA guesses what number it is. The neural network doesn't run on a computer or a processor it runs as actual logic on the chip.
 
 ## Why I made it
 
